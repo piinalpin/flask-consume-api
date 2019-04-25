@@ -4,6 +4,7 @@ from app.constant import RequestMethod
 import pandas as pd
 import requests
 import os
+
 pd.set_option('display.max_colwidth', -1)
 
 # Define HOST API
@@ -31,9 +32,11 @@ def search():
                 endpoint = host + "/search?q=" + request.args["q"]
                 req = requests.get(endpoint)
             else:
-                return "ERROR"
+                message = "Request should be text not white space"
+                return render_template("error.html", message=message)
         else:
-            return "ERROR"
+            message = "Request should be query string"
+            return render_template("error.html", message=message)
 
     # Jika menggunakan Query dari file Excel
     elif request.method == "POST":
@@ -41,12 +44,14 @@ def search():
             # Define endpoint http://localhost:5000/search
             endpoint = host + "/search"
             file = request.files["files"]
-            file.save(os.path.join("tmp", "queries.xlsx")) # Save file upload to tmp/
+            file.save(os.path.join("tmp", "queries.xlsx"))  # Save file upload to tmp/
             # Define request files for POST data
-            files = {"files": ("queries.xlsx", open("tmp/queries.xlsx", "rb"), 'application/vnd.ms-excel', {'Expires': '0'})}
+            files = {
+                "files": ("queries.xlsx", open("tmp/queries.xlsx", "rb"), 'application/vnd.ms-excel', {'Expires': '0'})}
             req = requests.post(endpoint, files=files)
         else:
-            return "ERROR"
+            message = "Request should be files"
+            return render_template("error.html", message=message)
 
     # Process JSON Response to DataFrame
     for query in req.json():
