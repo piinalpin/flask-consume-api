@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "head.html" %}
+</head>
+<body>
+    <!-- Home-Area -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-8 col-sm-offset-2 text-center">
+                <div class="space-80 hidden-xs"></div>
+                <img src="/static/images/research.png" style="max-width: 60%;" class="wow fadeInUp" alt="">
+                <div class="subscribe-form text-center wow fadeInUp">
+                    <form method="GET" action="/search">
+                        <input type="text" name="q" class="control" placeholder="Search by query">
+                        <button class="bttn-white active" type="submit"><span class="lnr lnr-magnifier"></span> Search</button>
+                    </form>
+                    <div class="space-20"></div>
+                    <h4>--- OR ---</h4>
+                    <form method="POST" action="/search" enctype="multipart/form-data">
+                        <input type="file" name="files" class="control">
+                        <button class="bttn-white active" type="submit"><span class="lnr lnr-upload"></span> Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Home-Area-End -->
+{% include "script.html" %}
+</body>
+</html>
